@@ -20,6 +20,7 @@ public class AbstractDomainObject implements DomainObject {
     private Integer version;
 
     private Date dateCreated;
+
     private Date lastUpdated;
 
     @Override
