@@ -10,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -66,7 +67,11 @@ public class Day extends AbstractDomainObject {
     }
 
     public void setItems(List<Item> items) {
-        this.items.clear();
-        this.items.addAll(items);
+        if (items == null) {
+            this.items = new ArrayList<>();
+        } else {
+            this.items.clear();
+            this.items.addAll(items);
+        }
     }
 }
