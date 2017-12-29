@@ -67,6 +67,9 @@ public class Day extends AbstractDomainObject {
     }
 
     public void setItems(List<Item> items) {
+        if (this.items == null) {
+            this.items = new ArrayList<>();
+        }
         if (items == null) {
             this.items = new ArrayList<>();
         } else {
