@@ -1,0 +1,150 @@
+// +-----------------------------+
+// | MIXINS FOR FLEXBOX SYNTAXES |
+// +-----------------------------+
+
+// ---------- FLEX CONTAINER ----------
+// display: flex | inline-flex
+@mixin flex-display($display: flex) {
+  @if $display == flex {
+    display: -ms-flexbox; // IE10
+    display: -webkit-flex;
+  } @else if $display == inline-flex {
+    display: -ms-inline-flexbox; // IE10
+    display: -webkit-inline-flex;
+  }
+  display: $display;
+}
+
+// flex-direction: row | row-reverse | column | column-reverse
+@mixin flex-direction($direction: row) {
+  -ms-flex-direction: $direction;
+  -webkit-flex-direction: $direction;
+  flex-direction: $direction;
+}
+
+// flex-wrap: nowrap | wrap | wrap-reverse
+@mixin flex-wrap($wrap: nowrap) {
+  -ms-flex-wrap: $wrap;
+  -webkit-flex-wrap: $wrap;
+  flex-wrap: $wrap;
+}
+
+// flex-flow: <‘flex-direction’> || <‘flex-wrap’>
+@mixin flex-flow($flow: row nowrap) {
+  -ms-flex-flow: $flow;
+  -webkit-flex-flow: $flow;
+  flex-flow: $flow;
+}
+
+// justify-content: flex-start | flex-end | center | space-between | space-around
+@mixin flex-justify-content($justifyContent: flex-start) {
+  @include ms-flex-justify-content($justifyContent);
+  -webkit-justify-content: $justifyContent;
+  justify-content: $justifyContent;
+}
+
+// align-items: flex-start | flex-end | center | baseline | stretch
+@mixin flex-align-items($alignItems: stretch) {
+  @include ms-flex-align-items($alignItems);
+  -webkit-align-items: $alignItems;
+  align-items: $alignItems;
+}
+
+// align-content: flex-start | flex-end | center | space-between | space-around | stretch
+@mixin flex-align-content($alignContent: stretch) {
+  @include ms-flex-align-content($alignContent);
+  -webkit-align-content: $alignContent;
+  align-content: $alignContent;
+}
+
+// ---------- FLEX ITEMS ----------
+// order: <integer>
+@mixin flex-order($order) {
+  -ms-flex-order: $order;
+  -webkit-order: $order;
+  order: $order;
+}
+
+// flex-grow: <number>
+@mixin flex-grow($grow) {
+  -ms-flex-positive: $grow;
+  -webkit-flex-grow: $grow;
+  flex-grow: $grow;
+}
+
+// flex-shrink: <number>
+@mixin flex-shrink($shrink) {
+  -ms-flex-negative: $shrink;
+  -webkit-flex-shrink: $shrink;
+  flex-shrink: $shrink;
+}
+
+// flex-basis: <length> | auto
+@mixin flex-basis($basis) {
+  -ms-flex-preferred-size: $basis;
+  -webkit-flex-basis: $basis;
+  flex-basis: $basis;
+}
+
+// flex: none | [ <'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ]
+@mixin flex($flex: 0 1 auto) {
+  -ms-flex: $flex;
+  -webkit-flex: $flex;
+  flex: $flex;
+}
+
+// align-self: auto | flex-start | flex-end | center | baseline | stretch
+@mixin flex-align-self($selfAlignStyle) {
+  @include ms-flex-align-self($selfAlignStyle);
+  -webkit-align-self: $selfAlignStyle;
+  align-self: $selfAlignStyle;
+}
+
+// ---------- HELPER (IE10) ----------
+@mixin ms-flex-justify-content($justifyContent) {
+  @if $justifyContent == flex-start {
+    -ms-flex-pack: start;
+  } @else if $justifyContent == flex-end {
+    -ms-flex-pack: end;
+  } @else if $justifyContent == space-between {
+    -ms-flex-pack: justify;
+  } @else if $justifyContent == space-around {
+    -ms-flex-pack: distribute;
+  } @else {
+    -ms-flex-pack: $justifyContent;
+  }
+}
+
+@mixin ms-flex-align-content($alignContent) {
+  @if $alignContent == flex-start {
+    -ms-flex-line-pack: start;
+  } @else if $alignContent == flex-end {
+    -ms-flex-line-pack: end;
+  } @else if $alignContent == space-between {
+    -ms-flex-line-pack: justify;
+  } @else if $alignContent == space-around {
+    -ms-flex-line-pack: distribute;
+  } @else {
+    -ms-flex-line-pack: $alignContent;
+  }
+}
+
+@mixin ms-flex-align-items($alignItems) {
+  @if $alignItems == flex-start {
+    -ms-flex-align: start;
+  } @else if $alignItems == flex-end {
+    -ms-flex-align: end;
+  } @else {
+    -ms-flex-align: $alignItems;
+  }
+}
+
+@mixin ms-flex-align-self($alignSelf) {
+  @if $alignSelf == flex-start {
+    -ms-flex-item-align: start;
+  } @else if $alignSelf == flex-end {
+    -ms-flex-item-align: end;
+  } @else {
+    -ms-flex-item-align: $alignSelf;
+  }
+}

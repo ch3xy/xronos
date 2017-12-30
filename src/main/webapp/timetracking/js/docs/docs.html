@@ -1,0 +1,87 @@
+<div class="view-header">
+    <month-switch date="$ctrl.currentDate"></month-switch>
+
+	<div class="header-bar columns">
+		<div data-column="weeknumber">&nbsp;</div>
+		<div data-column="weekday">Wochentag</div>
+		<div data-column="date">Datum</div>
+		<div data-column="workday">
+			<div>Arbeitstag</div>
+			<div class="lunchbreak">
+				<div>Mittagspause</div>
+			</div>
+		</div>
+		<div data-column="summary">
+			<div>Zusammenfassung</div>
+			<div class="summary-types">
+				<div class="item">SOLL</div>
+				<div class="item">IST</div>
+				<div class="item">DIFF</div>
+			</div>
+		</div>
+		<div data-column="comment">Kommentar</div>
+	</div>
+</div>
+
+<div class="view-body">
+	<div class="week" ng-repeat="week in $ctrl.data">
+		<div class="week-wrapper columns">
+			<div class="weeknumber" data-column="weeknumber">
+				<div>{{$ctrl.getCalendarWeek(week)}}</div>
+			</div>
+			<div class="week-days">
+				<div class="day" ng-repeat="day in week" ng-class="{ 'is-weekend':$ctrl.isWeekend(day) }">
+					<div class="day-label" data-column="weekday">
+						{{$ctrl.formatDateString(day.date, 'dddd')}}
+					</div>
+					<div class="date-label" data-column="date">
+						{{$ctrl.formatDateString(day.date, 'DD.MM.YYYY')}}
+					</div>
+					<div class="day-data" data-column="workday">
+						<datetime class="time" date="day.workStart" format="HH:mm"
+                                  on-change="$ctrl.onWorkStartChange($event, day)"
+                                  on-blur="$ctrl.onInputBlur(day)"></datetime>
+						<datetime class="time" date="day.breakStart" format="HH:mm"
+                                  on-change="$ctrl.onBreakStartChange($event, day)"
+                                  on-blur="$ctrl.onInputBlur(day)"></datetime>
+						<datetime class="time" date="day.breakEnd" format="HH:mm"
+                                  on-change="$ctrl.onBreakEndChange($event, day)"
+                                  on-blur="$ctrl.onInputBlur(day)"></datetime>
+						<datetime class="time" date="day.workEnd" format="HH:mm"
+                                  on-change="$ctrl.onWorkEndChange($event, day)"
+                                  on-blur="$ctrl.onInputBlur(day)"></datetime>
+					</div>
+					<div class="day-summary" data-column="summary">
+						<div class="summary-items">
+							<div class="item">
+								{{$ctrl.getCalculatedWorkhours(day) | duration}}
+							</div>
+							<div class="item">
+								{{$ctrl.getNeededWorkhours(day) | duration}}
+							</div>
+							<div class="item" ng-class="{ 'is-negative':$ctrl.isDurationNegative($ctrl.getDifferenceWorkhours(day)) }">
+								{{$ctrl.getDifferenceWorkhours(day) | duration:true}}
+							</div>
+						</div>
+					</div>
+					<div class="day-note" data-column="comment">
+						<input type="text" ng-model="day.notes" ng-blur="$ctrl.onInputBlur(day)" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="week-summary">
+			<div class="summary-items">
+				<div class="item">
+					{{$ctrl.getCalculatedWeekWorkhours(week) | duration}}
+				</div>
+				<div class="item">
+					{{$ctrl.getNeededWeekWorkhours(week) | duration}}
+				</div>
+				<div class="item" ng-class="{ 'is-negative':$ctrl.isDurationNegative($ctrl.getDifferenceWeekWorkhours(week)) }">
+					{{$ctrl.getDifferenceWeekWorkhours(week) | duration:true}}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

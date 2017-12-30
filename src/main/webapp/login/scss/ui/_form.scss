@@ -1,0 +1,71 @@
+form {
+  @include flex-display(flex);
+  @include flex-align-items(center);
+  @include flex-justify-content(center);
+
+  width: 100%;
+  height: 100%;
+}
+
+.input-section,
+.action-section {
+  width: 300px;
+}
+
+.input-container {
+  &:first-child {
+    margin-bottom: 1px;
+  }
+}
+
+.action-section {
+  margin-top: 10px;
+}
+
+input[name="username"],
+input[name="password"],
+button {
+  width: 100%;
+  min-height: 40px;
+  line-height: 40px;
+}
+
+input[name="username"],
+input[name="password"] {
+  padding-left: 35px;
+}
+
+form {
+  background: #474747;
+}
+
+.input-section {
+  input {
+    border: none;
+
+    &:focus {
+      outline: 0;
+    }
+
+    &[name="username"] {
+      border-radius: $borderRadius $borderRadius 0 0;
+    }
+
+    &[name="password"] {
+      border-radius: 0 0 $borderRadius $borderRadius;
+    }
+  }
+}
+
+.action-section {
+  button {
+    background: #cccccc;
+    border: none;
+    border-radius: $borderRadius;
+    cursor: pointer;
+
+    &:hover {
+      background: #dddddd;
+    }
+  }
+}

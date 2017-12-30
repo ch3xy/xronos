@@ -1,0 +1,209 @@
+docs {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	right: 10px;
+	bottom: 10px;
+
+	@include flex-display(flex);
+	@include flex-direction(column);
+
+	.view-header {
+		text-align: center;
+
+		.header-bar {
+			@include flex-display(flex);
+			@include flex-align-items(center);
+			@include flex-align-content(stretch);
+			@include flex-justify-content(space-between);
+		}
+
+		.summary-types {
+			@include flex-display(flex);
+			@include flex-align-items(center);
+			@include flex-justify-content(space-around);
+
+			.item {
+				width: 33%;
+			}
+		}
+	}
+
+	.view-body {
+		@include flex(1);
+
+		overflow-x: hidden;
+		overflow-y: auto;
+	}
+
+	.columns {
+		[data-column] {
+			padding: 0.25em 0.5em;
+		}
+
+		[data-column="weeknumber"] {
+			width: 40px;
+			padding: 0;
+		}
+
+		[data-column="weekday"] {
+			width: 80px;
+		}
+
+		[data-column="date"] {
+			width: 80px;
+		}
+
+		[data-column="workday"] {
+			width: 260px;
+		}
+
+		[data-column="summary"] {
+			width: 160px;
+		}
+
+		[data-column="comment"] {
+			@include flex(1);
+		}
+
+		&.header-bar {
+			[data-column="weeknumber"] {
+				// +1 because body has border on the right side
+				width: 41px;
+			}
+
+			[data-column="workday"],
+			[data-column="summary"] {
+				padding-bottom: 0;
+			}
+
+			.lunchbreak {
+				width: 125px;
+				margin: 0 auto;
+			}
+		}
+	}
+
+	.summary-items {
+		@include flex-display(flex);
+		@include flex-align-items(center);
+		@include flex-justify-content(space-around);
+
+		width: 100%;
+
+		.item {
+			&.is-negative {
+				color: red;
+			}
+		}
+	}
+
+	.week {
+		margin-bottom: 20px;
+	}
+
+	.week-wrapper {
+		@include flex-display(flex);
+		@include flex-align-items(center);
+	}
+
+	.weeknumber {
+		> div {
+			-webkit-transform: rotate(-90deg);
+			-moz-transform: rotate(-90deg);
+			-ms-transform: rotate(-90deg);
+			-o-transform: rotate(-90deg);
+		}
+	}
+
+	.week-days {
+		@include flex(1);
+	}
+
+	.week-summary {
+		width: 160px;
+		margin-left: 461px;
+
+		.summary-items {
+			padding: 0.25em 0.5em;
+		}
+	}
+
+	.day,
+	.day-description,
+	.day-data {
+		@include flex-display(flex);
+		@include flex-align-items(center);
+		@include flex-justify-content(space-between);
+	}
+
+	.day-summary {
+		@include flex-display(flex);
+		@include flex-align-items(center);
+		@include flex-justify-content(center);
+	}
+
+	.time {
+		input[type="text"] {
+			width: 55px;
+			text-align: center;
+		}
+	}
+
+	.day-note {
+		@include flex(1);
+
+		input[type="text"] {
+			width: 100%;
+		}
+	}
+}
+
+docs {
+	.header-bar {
+		border: 1px solid transparent;
+		border-bottom: none;
+
+		[data-column="workday"] {
+			border-top: 1px solid #cccccc;
+		}
+	}
+
+	[data-column="workday"] {
+		border-left: 1px solid #cccccc;
+		border-right: 1px solid #cccccc;
+	}
+
+	.lunchbreak {
+		border: 1px solid #cccccc;
+		border-bottom: none;
+	}
+
+	.week-wrapper {
+		border: 1px solid #cccccc;
+	}
+
+	.week-days {
+		border-left: 1px solid #cccccc;
+	}
+
+	.is-weekend {
+		&,
+		datetime input[type="text"] {
+			color: #cccccc;
+		}
+	}
+
+	datetime {
+		.ng-invalid {
+			color: red;
+			border: 1px solid red;
+		}
+	}
+
+	.summary-items {
+		.is-negative {
+			color: red;
+		}
+	}
+}

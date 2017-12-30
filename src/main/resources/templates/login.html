@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <base href="/" />
+    <meta charset="utf-8" />
     <title>Xronos</title>
+    <link rel="stylesheet" href="login/dist/login.css" />
 </head>
 <body>
 <div th:if="${param.error}">
@@ -11,10 +13,58 @@
 <div th:if="${param.logout}">
     You have been logged out.
 </div>
+<div class="note" style="position:absolute;top:50px;left:50px;color:#ffffff;">
+    <h1>XRONOS alpha</h1>
+</div>
 <form th:action="@{/login}" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
+    <section class="alert-section">
+        <div class="alert alert-info" th:if="${param.logout}">
+            <div class="text" th:text="#{login.notification.loggedout}">
+                You have been logged out.
+            </div>
+        </div>
+        <div class="alert alert-error" th:if="${param.error}">
+            <div class="text" th:text="#{login.notification.invalid}">
+                Invalid username and password.
+            </div>
+        </div>
+        <div class="alert alert-error" th:if="${param.unauthorized}">
+            <div class="text" th:text="#{login.notification.notauthorized}">
+                You are not authorized.
+            </div>
+        </div>
+        <div class="alert alert-error" th:if="${param.expired}">
+            <div class="text" th:text="#{login.notification.expired}">
+                Session expired.
+            </div>
+        </div>
+    </section>
+
+    <section class="form-section">
+        <section class="input-section">
+            <div class="input-container">
+                <input type="text" name="username" id="username" th:placeholder="#{login.username.placeholder}"
+                       placeholder="username" autocomplete="off"/>
+                <span class="icon icon-username"></span>
+            </div>
+            <div class="input-container">
+                <input type="password" name="password" id="password" th:placeholder="#{login.password.placeholder}"
+                       placeholder="password" autocomplete="off"/>
+                <span class="icon icon-password"></span>
+            </div>
+        </section>
+
+        <section class="action-section">
+            <button type="submit" th:text="#{login.button.title}">Login</button>
+        </section>
+    </section>
 </form>
+
+<script>
+    (function() {
+        document.querySelector('input[name="username"]').focus();
+    }());
+</script>
+
 </body>
 </html>
