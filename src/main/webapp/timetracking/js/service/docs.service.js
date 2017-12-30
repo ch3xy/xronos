@@ -3,6 +3,10 @@ import moment from 'moment';
 export default ['$http', '$q', function($http, $q) {
     const dateFormat = 'YYYY-MM-DD';
 
+    function fetchDayTypes() {
+        return $http.get('/api/timetracking/types').then((response) => response.data);
+    }
+
 	function fetchMonth(date) {
 	    const monthStart = moment(date).startOf('month').format(dateFormat);
 	    const monthEnd = moment(date).endOf('month').format(dateFormat);
@@ -25,7 +29,7 @@ export default ['$http', '$q', function($http, $q) {
                     date:currentDateString,
                     items:[],
                     targetWorkHours:currentDate.isoWeekday() < 6 ? 7.7 : 0,
-                    type:'WORKING'
+                    type:'WORKDAY'
                 };
             });
 
@@ -40,6 +44,7 @@ export default ['$http', '$q', function($http, $q) {
     }
 
 	return {
+	    fetchDayTypes:fetchDayTypes,
         fetchMonth:fetchMonth,
         saveDay:saveDay
 	};

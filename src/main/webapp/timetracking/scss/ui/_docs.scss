@@ -54,6 +54,10 @@ docs {
 			width: 80px;
 		}
 
+        [data-column="type"] {
+            width: 120px;
+        }
+
 		[data-column="workday"] {
 			width: 260px;
 		}
@@ -122,7 +126,7 @@ docs {
 
 	.week-summary {
 		width: 160px;
-		margin-left: 461px;
+		margin-left: 581px;
 
 		.summary-items {
 			padding: 0.25em 0.5em;

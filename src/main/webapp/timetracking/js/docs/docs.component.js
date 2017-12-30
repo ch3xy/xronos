@@ -1,3 +1,4 @@
+import i18n from 'i18next';
 import moment from 'moment';
 
 import template from './docs.html';
@@ -18,6 +19,14 @@ class Controller {
 		this.data = this.createData();
 	}
 
+	t(key, params={}) {
+	    return i18n.t('docs.' + key, params);
+    }
+
+    getDayTypeTitle(dayType) {
+	    return i18n.t('dayType.' + dayType);
+    }
+
 	onWorkStartChange(newMoment, day) {
 		day.workStart = newMoment;
 	}
@@ -35,13 +44,28 @@ class Controller {
 	}
 
     onInputBlur(day) {
+        this.saveDay(day);
+    }
+
+    onTypeChange(day) {
+        if(day.type !== 'WORKDAY') {
+            const refDate = day.date.clone().startOf('day');
+            day.workStart = refDate.clone().add(9, 'hours');
+            day.workEnd = refDate.clone().add(16, 'hours').add(42, 'minutes');
+            day.breakStart = refDate.clone();
+            day.breakEnd = refDate.clone();
+        }
+        this.saveDay(day);
+    }
+
+    saveDay(day) {
         const serverDay = {
             date:day.date.format(this.dateParserFormat),
             items:this.formatTimes(day),
             targetWorkHours:day.targetWorkHours,
             type:day.type
         };
-	    this.docsService.saveDay(serverDay).then(this.onSaveSuccess.bind(this), this.onSaveError.bind(this));
+        this.docsService.saveDay(serverDay).then(this.onSaveSuccess.bind(this), this.onSaveError.bind(this));
     }
 
     onSaveSuccess() {
@@ -88,10 +112,8 @@ class Controller {
 	}
 
 	getCalendarWeek(week) {
-		if(week instanceof Array && week.length > 0) {
-			return 'KW ' + week[0].date.week();
-		}
-		return 'KW -';
+	    const weeknumber = week instanceof Array && week.length > 0 ? week[0].date.week() : '-';
+        return this.t('calendarweek.title', { number:weeknumber });
 	}
 
 	createData() {
@@ -178,6 +200,7 @@ export default {
 	controller:Controller,
 	template:template,
 	bindings:{
-		record:'<'
+		record:'<',
+        dayTypes:'<'
 	}
 };

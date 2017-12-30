@@ -28,6 +28,11 @@
     "angular-animate": "^1.6.8",
     "angular-resource": "^1.6.8",
     "angular-route": "^1.6.8",
-    "moment": "^2.20.1"
+    "angular-sanitize": "^1.6.8",
+    "i18next": "^10.2.2",
+    "i18next-localstorage-cache": "^1.1.1",
+    "i18next-xhr-backend": "^1.5.0",
+    "moment": "^2.20.1",
+    "ng-i18next": "^1.0.5"
   }
 }

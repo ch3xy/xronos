@@ -3,23 +3,24 @@
 
 	<div class="header-bar columns">
 		<div data-column="weeknumber">&nbsp;</div>
-		<div data-column="weekday">Wochentag</div>
-		<div data-column="date">Datum</div>
+		<div data-column="weekday">{{$ctrl.t('header.weekday.title')}}</div>
+		<div data-column="date">{{$ctrl.t('header.date.title')}}</div>
+        <div data-column="type">{{$ctrl.t('header.type.title')}}</div>
 		<div data-column="workday">
-			<div>Arbeitstag</div>
+			<div>{{$ctrl.t('header.workday.title')}}</div>
 			<div class="lunchbreak">
-				<div>Mittagspause</div>
+				<div>{{$ctrl.t('header.lunchbreak.title')}}</div>
 			</div>
 		</div>
 		<div data-column="summary">
-			<div>Zusammenfassung</div>
+			<div>{{$ctrl.t('header.summary.title')}}</div>
 			<div class="summary-types">
-				<div class="item">SOLL</div>
-				<div class="item">IST</div>
-				<div class="item">DIFF</div>
+				<div class="item">{{$ctrl.t('header.summary.worked.title')}}</div>
+				<div class="item">{{$ctrl.t('header.summary.needed.title')}}</div>
+				<div class="item">{{$ctrl.t('header.summary.difference.title')}}</div>
 			</div>
 		</div>
-		<div data-column="comment">Kommentar</div>
+		<div data-column="comment">{{$ctrl.t('header.note.title')}}</div>
 	</div>
 </div>
 
@@ -37,6 +38,13 @@
 					<div class="date-label" data-column="date">
 						{{$ctrl.formatDateString(day.date, 'DD.MM.YYYY')}}
 					</div>
+                    <div class="day-type" data-column="type">
+                        <select name="type" ng-model="day.type" ng-change="$ctrl.onTypeChange(day)">
+                            <option ng-repeat="type in $ctrl.dayTypes" value="{{type}}">
+                                {{$ctrl.getDayTypeTitle(type)}}
+                            </option>
+                        </select>
+                    </div>
 					<div class="day-data" data-column="workday">
 						<datetime class="time" date="day.workStart" format="HH:mm"
                                   on-change="$ctrl.onWorkStartChange($event, day)"

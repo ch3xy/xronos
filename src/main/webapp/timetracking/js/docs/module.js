@@ -19,7 +19,10 @@ angular.module(moduleId, [])
 				const year = parseInt($stateParams.year);
 				const month = parseInt($stateParams.month);
                 return docsService.fetchMonth(moment({ year:year, month:month -1 }));
-			}]
+			}],
+            dayTypes:['docsService', (docsService) => {
+			    return docsService.fetchDayTypes();
+            }]
 		}
 	});
 }])
