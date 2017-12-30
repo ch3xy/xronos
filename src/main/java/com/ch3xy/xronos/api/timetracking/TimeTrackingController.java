@@ -6,6 +6,7 @@ import com.ch3xy.xronos.auth.model.User;
 import com.ch3xy.xronos.auth.service.UserService;
 import com.ch3xy.xronos.timetracking.model.Day;
 import com.ch3xy.xronos.timetracking.model.TimeTrackingInfo;
+import com.ch3xy.xronos.timetracking.model.Type;
 import com.ch3xy.xronos.timetracking.service.DayService;
 import com.ch3xy.xronos.timetracking.service.TimeTrackingService;
 import org.slf4j.Logger;
@@ -25,6 +26,9 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api/timetracking")
@@ -86,5 +90,11 @@ public class TimeTrackingController {
                                            Principal principal) {
         Day persistedDay = dayService.save(dayMapper.map(day, principal.getName()));
         return new ResponseEntity<>(dayMapper.map(persistedDay), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/types", method = RequestMethod.GET)
+    public Set<Type> getTimeTrackingTypes() {
+        return Arrays.stream(Type.values())
+                .collect(Collectors.toSet());
     }
 }
