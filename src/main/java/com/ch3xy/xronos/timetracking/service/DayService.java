@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -34,7 +34,7 @@ public class DayService {
         dayRepository.delete(day);
     }
 
-    public List<Day> getDaysForUserBetween(User user, Date from, Date to) {
+    public List<Day> getDaysForUserBetween(User user, LocalDate from, LocalDate to) {
         return dayRepository.getDaysForUserBetween(user, from, to);
     }
 }

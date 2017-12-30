@@ -1,11 +1,13 @@
-package com.ch3xy.xronos.api;
+package com.ch3xy.xronos.api.timetracking;
 
-import com.ch3xy.xronos.api.model.DayTO;
-import com.ch3xy.xronos.api.model.TimeTrackingInfoTO;
+import com.ch3xy.xronos.api.timetracking.model.DayTO;
+import com.ch3xy.xronos.api.timetracking.model.TimeTrackingInfoTO;
 import com.ch3xy.xronos.auth.model.User;
 import com.ch3xy.xronos.auth.service.UserService;
 import com.ch3xy.xronos.timetracking.model.Day;
+import com.ch3xy.xronos.timetracking.model.TimeTrackingInfo;
 import com.ch3xy.xronos.timetracking.service.DayService;
+import com.ch3xy.xronos.timetracking.service.TimeTrackingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Date;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/timetracking")
@@ -39,15 +38,19 @@ public class TimeTrackingController {
 
     private UserService userService;
 
+    private TimeTrackingService timeTrackingService;
+
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @Autowired
     public TimeTrackingController(DayService dayService,
                                   DayMapper dayMapper,
-                                  UserService userService) {
+                                  UserService userService,
+                                  TimeTrackingService timeTrackingService) {
         this.dayService = dayService;
         this.dayMapper = dayMapper;
         this.userService = userService;
+        this.timeTrackingService = timeTrackingService;
     }
 
     @RequestMapping(value = "/days", method = RequestMethod.GET)
@@ -65,21 +68,23 @@ public class TimeTrackingController {
         }
 
         User user = userService.getUser(principal.getName());
-        List<Day> days = dayService.getDaysForUserBetween(
+        TimeTrackingInfo info = timeTrackingService.getInfo(
                 user,
-                Date.from(dateFrom.atStartOfDay(ZoneId.systemDefault()).toInstant()),
-                Date.from(dateTo.atStartOfDay(ZoneId.systemDefault()).toInstant()));
-        TimeTrackingInfoTO infoTO = new TimeTrackingInfoTO.Builder()
-                .days(dayMapper.mapDays(days))
-                .build();
-        return new ResponseEntity<>(infoTO, HttpStatus.OK);
+                dateFrom,
+                dateTo);
+
+        return new ResponseEntity<>(new TimeTrackingInfoTO.Builder()
+                .vacationDays(info.getVacationDays())
+                .overTimeCarryOver(info.getOvertimeCarryover())
+                .days(dayMapper.mapDays(info.getDays()))
+                .build(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/day/{targetDay}", method = RequestMethod.POST)
     public ResponseEntity<DayTO> createDay(@PathVariable String targetDay,
                                            @Valid @RequestBody DayTO day,
                                            Principal principal) {
-        Day persitedDay = dayService.save(dayMapper.map(day, principal.getName()));
-        return new ResponseEntity<>(dayMapper.map(persitedDay), HttpStatus.OK);
+        Day persistedDay = dayService.save(dayMapper.map(day, principal.getName()));
+        return new ResponseEntity<>(dayMapper.map(persistedDay), HttpStatus.OK);
     }
 }

@@ -5,7 +5,7 @@ import com.ch3xy.xronos.common.AbstractDomainObject;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import java.util.Date;
+import java.time.LocalTime;
 
 @Entity
 public class Item extends AbstractDomainObject {
@@ -14,9 +14,9 @@ public class Item extends AbstractDomainObject {
     @JoinColumn(name = "day")
     private Day day;
 
-    private Date dateFrom;
+    private LocalTime dateFrom;
 
-    private Date dateTo;
+    private LocalTime dateTo;
 
     private String notes;
 
@@ -28,19 +28,19 @@ public class Item extends AbstractDomainObject {
         this.day = day;
     }
 
-    public Date getDateFrom() {
+    public LocalTime getDateFrom() {
         return dateFrom;
     }
 
-    public void setDateFrom(Date dateFrom) {
+    public void setDateFrom(LocalTime dateFrom) {
         this.dateFrom = dateFrom;
     }
 
-    public Date getDateTo() {
+    public LocalTime getDateTo() {
         return dateTo;
     }
 
-    public void setDateTo(Date dateTo) {
+    public void setDateTo(LocalTime dateTo) {
         this.dateTo = dateTo;
     }
 

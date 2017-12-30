@@ -1,11 +1,12 @@
-package com.ch3xy.xronos.api.model;
+package com.ch3xy.xronos.api.timetracking.model;
 
 import com.ch3xy.xronos.timetracking.model.Type;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class DayTO {
@@ -13,7 +14,8 @@ public class DayTO {
     private Long id;
 
     @NotNull
-    private Date date;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate date;
 
     @NotNull
     private Type type;
@@ -39,7 +41,7 @@ public class DayTO {
         return id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
@@ -57,7 +59,7 @@ public class DayTO {
 
     public static class Builder {
         private Long id;
-        private Date date;
+        private LocalDate date;
         private Type type;
         private float targetWorkHours;
         private List<ItemTO> items = new ArrayList<>();
@@ -67,7 +69,7 @@ public class DayTO {
             return this;
         }
 
-        public Builder date(Date date) {
+        public Builder date(LocalDate date) {
             this.date = date;
             return this;
         }

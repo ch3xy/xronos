@@ -1,4 +1,4 @@
-package com.ch3xy.xronos.api.model;
+package com.ch3xy.xronos.api.timetracking.model;
 
 import java.util.ArrayList;
 import java.util.List;

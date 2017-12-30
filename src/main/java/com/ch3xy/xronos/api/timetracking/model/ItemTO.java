@@ -1,17 +1,21 @@
-package com.ch3xy.xronos.api.model;
+package com.ch3xy.xronos.api.timetracking.model;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalTime;
 
 public class ItemTO {
 
     private Long id;
 
     @NotNull
-    private Date from;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+    private LocalTime from;
 
     @NotNull
-    private Date to;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+    private LocalTime to;
 
     private String notes;
 
@@ -30,11 +34,11 @@ public class ItemTO {
         return id;
     }
 
-    public Date getFrom() {
+    public LocalTime getFrom() {
         return from;
     }
 
-    public Date getTo() {
+    public LocalTime getTo() {
         return to;
     }
 
@@ -44,8 +48,8 @@ public class ItemTO {
 
     public static class Builder {
         private Long id;
-        private Date from;
-        private Date to;
+        private LocalTime from;
+        private LocalTime to;
         private String notes;
 
         public Builder id(Long id) {
@@ -53,12 +57,12 @@ public class ItemTO {
             return this;
         }
 
-        public Builder from(Date from) {
+        public Builder from(LocalTime from) {
             this.from = from;
             return this;
         }
 
-        public Builder to(Date to) {
+        public Builder to(LocalTime to) {
             this.to = to;
             return this;
         }

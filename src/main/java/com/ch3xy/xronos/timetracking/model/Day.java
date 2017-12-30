@@ -10,8 +10,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -20,7 +20,7 @@ public class Day extends AbstractDomainObject {
     @ManyToOne
     private User user;
 
-    private Date date;
+    private LocalDate date;
 
     @Enumerated(EnumType.STRING)
     private Type type;
@@ -38,11 +38,11 @@ public class Day extends AbstractDomainObject {
         this.user = user;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

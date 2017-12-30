@@ -1,7 +1,7 @@
-package com.ch3xy.xronos.api;
+package com.ch3xy.xronos.api.timetracking;
 
-import com.ch3xy.xronos.api.model.DayTO;
-import com.ch3xy.xronos.api.model.ItemTO;
+import com.ch3xy.xronos.api.timetracking.model.DayTO;
+import com.ch3xy.xronos.api.timetracking.model.ItemTO;
 import com.ch3xy.xronos.auth.model.User;
 import com.ch3xy.xronos.auth.service.UserService;
 import com.ch3xy.xronos.timetracking.model.Day;
