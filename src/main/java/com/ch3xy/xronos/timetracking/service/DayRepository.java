@@ -12,4 +12,7 @@ public interface DayRepository extends JpaRepository<Day, Long> {
 
     @Query(value = "select d from Day d where d.user=?1 and d.date >= ?2 and d.date <= ?3")
     List<Day> getDaysForUserBetween(User user, LocalDate from, LocalDate to);
+
+    @Query(value = "select d from Day d where d.user=?1 and d.date < ?2")
+    List<Day> getDaysForUserBefore(User user, LocalDate targetDate);
 }

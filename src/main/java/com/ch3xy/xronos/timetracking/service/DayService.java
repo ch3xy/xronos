@@ -37,4 +37,8 @@ public class DayService {
     public List<Day> getDaysForUserBetween(User user, LocalDate from, LocalDate to) {
         return dayRepository.getDaysForUserBetween(user, from, to);
     }
+
+    public List<Day> getDaysForUserBefore(User user, LocalDate targetDate) {
+        return dayRepository.getDaysForUserBefore(user, targetDate);
+    }
 }
